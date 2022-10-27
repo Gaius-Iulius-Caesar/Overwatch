@@ -3,13 +3,13 @@ package com.overwatch.dataServer;
 import com.overwatch.dataServer.net.NettyServer;
 import org.springframework.boot.SpringApplication;
 
+
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Component;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 @SpringBootApplication
 @Component
-@EnableAutoConfiguration
 public class DataServer {
 
 
