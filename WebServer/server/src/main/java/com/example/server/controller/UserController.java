@@ -26,9 +26,24 @@ public class UserController {
         if (StrUtil.isBlank(username) || StrUtil.isBlank(password)) {
             return Result.error(Constants.CODE_400, "参数错误");
         }
-        if(userService.login(user)) {
+
+        if (userService.login(user))
             return Result.success("登录成功");
+        else
+            return Result.error(Constants.CODE_400, "账户密码错误");
+    }
+
+    @PostMapping("/register")
+    public Result register(@RequestBody User user) {
+        String username = user.getUsername();
+        String password = user.getPassword();
+        if (StrUtil.isBlank(username) || StrUtil.isBlank(password)) {
+            return Result.error(Constants.CODE_400, "参数错误");
         }
-        else return Result.error(Constants.CODE_400, "账户密码错误");
+
+        if (userService.register(user))
+            return Result.success("登录成功");
+        else
+            return Result.error(Constants.CODE_400, "账户密码错误");
     }
 }

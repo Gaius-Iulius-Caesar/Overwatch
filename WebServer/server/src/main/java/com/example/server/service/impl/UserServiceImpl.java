@@ -11,4 +11,9 @@ public class UserServiceImpl implements IUserService {
     public boolean login(User user) {
         return true;
     }
+
+    @Override
+    public boolean register(User user) {
+        return true;
+    }
 }
