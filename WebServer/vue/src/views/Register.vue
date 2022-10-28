@@ -25,7 +25,6 @@ export default {
   name: "Register",
   data() {
     return {
-
       user: {}
     }
   },
@@ -48,11 +47,11 @@ export default {
 <style scoped>
 @font-face {
   font-family: 'icomoon';
-  src: url('../fonts/icomoon.eot?ckldyg');
-  src: url('../fonts/icomoon.eot?ckldyg#iefix') format('embedded-opentype'),
-  url('../fonts/icomoon.ttf?ckldyg') format('truetype'),
-  url('../fonts/icomoon.woff?ckldyg') format('woff'),
-  url('../fonts/icomoon.svg?ckldyg#icomoon') format('svg');
+  src: url('../static/fonts/icomoon.eot?ckldyg');
+  src: url('../static/fonts/icomoon.eot?ckldyg#iefix') format('embedded-opentype'),
+  url('../static/fonts/icomoon.ttf?ckldyg') format('truetype'),
+  url('../static/fonts/icomoon.woff?ckldyg') format('woff'),
+  url('../static/fonts/icomoon.svg?ckldyg#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
