@@ -31,7 +31,7 @@
         <span slot="title">客户端节点</span>
       </template>
       <el-menu-item index="/admin/adminnodestatus">
-        <i class="el-icon-sell"></i>
+        <i class="el-icon-postcard"></i>
         <span slot="title">节点实时状态</span>
       </el-menu-item>
       <el-menu-item index="/admin/adminnoderealtimediagram">
