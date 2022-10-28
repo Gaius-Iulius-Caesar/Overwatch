@@ -46,7 +46,8 @@ export default {
           this.request.post("http://localhost:9090/user/login", this.user).then(res => {
             if (res.code === '200') {
               // 注意，此处获取到的user应为userDTO
-              this.$message.success("ok")
+              this.$message.success("登录成功")
+              this.$router.push("/admin")
             } else {
               this.$message.error(res.msg)
             }
