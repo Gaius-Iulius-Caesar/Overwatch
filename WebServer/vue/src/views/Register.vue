@@ -45,17 +45,6 @@ export default {
 </script>
 
 <style scoped>
-@font-face {
-  font-family: 'icomoon';
-  src: url('../static/fonts/icomoon.eot?ckldyg');
-  src: url('../static/fonts/icomoon.eot?ckldyg#iefix') format('embedded-opentype'),
-  url('../static/fonts/icomoon.ttf?ckldyg') format('truetype'),
-  url('../static/fonts/icomoon.woff?ckldyg') format('woff'),
-  url('../static/fonts/icomoon.svg?ckldyg#icomoon') format('svg');
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
-}
 
 li {
   list-style: none;
