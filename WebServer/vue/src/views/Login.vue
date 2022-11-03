@@ -43,7 +43,7 @@ export default {
       this.$refs['user'].validate((valid) => {
         // 表单校验合法
         if (valid) {
-          this.request.post("http://localhost:9090/user/login", this.user).then(res => {
+          this.request.post("http://localhost:8081/user/login", this.user).then(res => {
             if (res.code === '200') {
               // 注意，此处获取到的user应为userDTO
               this.$message.success("登录成功")
