@@ -16,12 +16,13 @@
       <th>Ops</th>
       </thead>
       <tbody id="tb">
-      <tr v-for="item in list">
+      <tr v-for="item in list" :key="item.id">
         <th><input type="checkbox" @click="ReverseSelectAll"></input></th>
-        <th>172.16.153.137</th>
-        <th>25EZQYPT</th>
-        <th>Offline</th>
+        <th>{{ item.id }}</th>
+        <th>{{ item.name }}</th>
+        <th>{{ item. os}}</th>
         <th>
+<!--          用了iconmoon字体图标-->
           <a href='javascript:'></a>
           <a href='javascript:'></a>
           <a href='javascript:'></a>
@@ -32,13 +33,25 @@
   </div>
 </template>
 
+
 <script>
+
+import $ from "jquery";
 export default {
+
   name: "AdminNodeStatus",
   data() {
     return {
-      list: [1, 2, 3],
+      list: []
     }
+  },
+  created(){
+    this.request.get("http://localhost:8081/machine/getAllUpToDate").then(res => {
+          if (res.code === '200') {
+            this.list = $.parseJSON(res.msg)
+
+          }
+    })
   },
   methods: {
     selectAll() {
@@ -47,6 +60,7 @@ export default {
       for (let i = 0; i < body.length; i++) {
         body[i].checked = all.checked;
       }
+
     },
     ReverseSelectAll() {
       let all = document.getElementById("all");
@@ -61,6 +75,7 @@ export default {
       }
       all.checked = flag;
     }
+
   }
 }
 

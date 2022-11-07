@@ -33,7 +33,12 @@ export default {
         }
       ]
     };
+    this.request.get("http://localhost:8081/machine/getOneUpToDate").then(res => {
+      if (res.code === '200') {
 
+        console.log($.parseJSON(res.msg))
+      }
+    })
     option && myChart.setOption(option);
   }
 }
