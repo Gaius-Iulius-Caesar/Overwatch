@@ -68,8 +68,6 @@ public class RegisterAndReportHandler extends SimpleChannelHandler {
                 }
 
                 command.setType(CommandType.INSERT);
-                command.getContents().put("ip",overwatchServerIp);
-                command.getContents().put("port",String.valueOf(overwatchServerPort));
 
                 socket= new Socket(dataServerIp, dataServerPort);
                 reader= new BufferedReader(new InputStreamReader(socket.getInputStream()));
