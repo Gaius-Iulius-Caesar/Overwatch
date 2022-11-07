@@ -6,15 +6,14 @@ import com.example.server.common.CommandType;
 import com.example.server.common.Constants;
 import com.example.server.common.Result;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.HashMap;
 
 @RequestMapping("/machine")
+@RestController
 public class MachineController {
     @Value("${dataServer.ip}")
     private String dataServer_ip;
@@ -29,8 +28,8 @@ public class MachineController {
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         Command command=new Command();
         command.setType(CommandType.SELECT_ALLUPTODATE);
-        command.getContents().put("ip",dataServer_ip);
-        command.getContents().put("port",String.valueOf(dataServer_port));
+//        command.getContents().put("ip",dataServer_ip);
+//        command.getContents().put("port",String.valueOf(dataServer_port));
         writer.write(command.toString());
         writer.flush();
         String response = reader.readLine();
