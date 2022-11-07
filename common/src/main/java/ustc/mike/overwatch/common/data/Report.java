@@ -30,21 +30,18 @@ package ustc.mike.overwatch.common.data;
  * @e-mail mike@mikecoder.cn
  */
 public class Report extends Data {
-    private String name;
-    private String OS;
+
+    private String ip;
     private double load;
     private int    cpus;
-    
 
-    public String getOS() {
-        return OS;
+    public String getIp() {
+        return ip;
     }
-    
 
-    public void setOS(String OS) {
-        this.OS = OS;
+    public void setIp(String ip) {
+        this.ip = ip;
     }
-    
 
     public double getLoad() {
         return load;
@@ -64,39 +61,7 @@ public class Report extends Data {
     public void setCpus(int cpus) {
         this.cpus = cpus;
     }
+
     
 
-    public String getName() {
-        return name;
-    }
-    
-
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        
-        Report report = (Report) o;
-        
-        if (Double.compare(report.load, load) != 0) return false;
-        if (cpus != report.cpus) return false;
-        if (name != null ? !name.equals(report.name) : report.name != null) return false;
-        return OS != null ? OS.equals(report.OS) : report.OS == null;
-    }
-    
-    @Override
-    public int hashCode() {
-        int result;
-        long temp;
-        result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (OS != null ? OS.hashCode() : 0);
-        temp = Double.doubleToLongBits(load);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + cpus;
-        return result;
-    }
 }

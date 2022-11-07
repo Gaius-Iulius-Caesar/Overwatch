@@ -3,24 +3,33 @@ package com.overwatch.dataServer.net;
 
 import com.alibaba.fastjson.JSON;
 import com.overwatch.dataServer.dao.RecordMapper;
+import com.overwatch.dataServer.dao.ResultMapper;
+import com.overwatch.dataServer.utils.SpringContextUtil;
 import org.jboss.netty.channel.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 import ustc.mike.overwatch.common.data.*;
+
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Date;
 import java.util.List;
 
-
 public class SelectHandler extends SimpleChannelHandler {
+
 
 
     @Autowired
     private RecordMapper recordMapper;
 
+    @Autowired
+    private ResultMapper resultMapper;
 
     public SelectHandler() throws IOException {
     }
@@ -30,28 +39,53 @@ public class SelectHandler extends SimpleChannelHandler {
     private BufferedWriter writer ;
 
     public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws IOException {
+        ApplicationContext CTX= SpringContextUtil.getApplicationContext();
+        recordMapper=CTX.getBean(RecordMapper.class);
+        resultMapper=CTX.getBean(ResultMapper.class);
+
         Command command = JSON.parseObject(e.getMessage().toString(), Command.class);
         System.out.print(command);
-        String ip=command.getContents().get("ip");
-        int port=Integer.parseInt(command.getContents().get("port"));
-        socket=new Socket(ip,port);
-        reader=new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        writer=new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+
         Channel channel = ctx.getChannel();
         switch (command.getType()) {
             case CommandType.SELECT_ALL: {
-                List<Record> list=recordMapper.selectAll();
-                channel.write(JSON.toJSONString(list));
+                List<Result> list=resultMapper.selectAll();
+                if(list!=null)
+                {
+                    Long now=System.currentTimeMillis();
+                    for(Result result:list)
+                    {
+                        if(now>=result.getTimeStamp()+5000)
+                        {
+                            result.setStatus(true);
+                        }
+                    }
+                }
+                channel.write(JSON.toJSONString(list)+"\n");
                 break;
             }
             case CommandType.SELECT_ALLUPTODATE: {
-                List<Record> list=recordMapper.selectAllUpToDate();
-                channel.write(JSON.toJSONString(list));
+                List<Result> list=resultMapper.selectAllUpToDate();
+                if(list!=null)
+                {
+                    Long now=System.currentTimeMillis();
+                    for(Result result:list)
+                    {
+                        if(now>=result.getTimeStamp()+5000)
+                        {
+                            result.setStatus(true);
+                        }
+                    }
+                }
+                channel.write(JSON.toJSONString(list)+'\n');
                 break;
             }
             case CommandType.SELECT_ONEUPTODATE:{
-                Record record = recordMapper.selectOneUpToDate(command.getContents().get("name"));
-                channel.write(JSON.toJSONString(record.toString()));
+                Result result = resultMapper.selectOneUpToDate(command.getContents().get("name"));
+                Long now=System.currentTimeMillis();
+                if(now>=result.getTimeStamp()+5000)
+                        result.setStatus(true);
+                channel.write(JSON.toJSONString(result.toString()));
                 break;
             }
             case CommandType.INSERT:{
@@ -59,9 +93,8 @@ public class SelectHandler extends SimpleChannelHandler {
                 Record record = new Record();
                 record.setAvgLoad(report.getLoad());
                 record.setCpuNum(report.getCpus());
-                record.setName(report.getName());
+                record.setIp(report.getIp());
                 record.setTimeStamp(System.currentTimeMillis());
-                record.setOs(report.getOS());
                 recordMapper.insertRecord(record);
                 break;
             }
@@ -70,9 +103,6 @@ public class SelectHandler extends SimpleChannelHandler {
                 channel.write(response);
             }
         }
-        socket.close();
-        reader.close();
-        writer.close();
     }
     
     @Override

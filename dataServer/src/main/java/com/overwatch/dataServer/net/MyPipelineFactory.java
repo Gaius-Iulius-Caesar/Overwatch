@@ -1,6 +1,7 @@
 
 package com.overwatch.dataServer.net;
 
+import com.overwatch.dataServer.dao.RecordMapper;
 import org.jboss.netty.channel.ChannelHandler;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.ChannelPipelineFactory;
@@ -11,6 +12,7 @@ import org.jboss.netty.handler.codec.string.StringDecoder;
 import org.jboss.netty.handler.codec.string.StringEncoder;
 import org.jboss.netty.util.CharsetUtil;
 import org.jboss.netty.util.Timer;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 
@@ -19,7 +21,7 @@ public class MyPipelineFactory implements ChannelPipelineFactory {
     
     private final  Timer          timer;
     private static ChannelHandler idleStateHandler;
-    
+
     public MyPipelineFactory(Timer t) {
         this.timer = t;
     }
