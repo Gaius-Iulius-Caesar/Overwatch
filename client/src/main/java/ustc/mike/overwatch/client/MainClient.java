@@ -39,6 +39,7 @@ import org.springframework.stereotype.Component;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -64,35 +65,25 @@ public class MainClient implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         Logger logger = LoggerFactory.getLogger(MainClient.class.getName());
-        String localIp = InetAddress.getLocalHost().getHostAddress();
+
     
-        client.setName(Utils.genRandomName());
-        client.setIp(localIp);
-        client.setOnline(true);
-    
-        logger.info("Register to :" + overwatchServerIp + ":" + overwatchServerPort);//向服务器注册
+        logger.info("Register to :" + overwatchServerIp + ":" + overwatchServerPort);
         Socket socket = new Socket(overwatchServerIp, overwatchServerPort);
         BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-    
-        Command registCmd = new Command();
-        registCmd.setType(CommandType.CLIENT_REGIST);
-        HashMap<String, String> registCmdContents = new HashMap<String, String>();
-    
-        registCmdContents.put("client", client.toString());
-        registCmd.setContents(registCmdContents);
-    
-        writer.write(registCmd.toString());
-        writer.flush();
+
 
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {//心跳协议
                 Report report = new Report();
-                report.setName(client.getName());
+                try {
+                    report.setIp( InetAddress.getLocalHost().getHostAddress());
+                } catch (UnknownHostException e) {
+                    throw new RuntimeException(e);
+                }
                 report.setCpus(Utils.getCpuNum());
                 report.setLoad(Utils.getAvgLoad());
-                report.setOS(Utils.getOs());
     
                 Command reportCmd = new Command();
                 reportCmd.setType(CommandType.CLIENT_REPORT);

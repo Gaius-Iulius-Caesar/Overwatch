@@ -1,32 +1,24 @@
 package ustc.mike.overwatch.common.data;
 
 import com.alibaba.fastjson.JSON;
+import org.springframework.context.annotation.Bean;
 
 public class Record extends Data {
 
+
         private int id;
-
-
-        private String name;
-
+        private String ip;
 
         private Double avgLoad;
 
-
-        private String os;
-
-
         private Long timeStamp;
-
         private Integer cpuNum;
-
 
         public Record() { }
 
-        public Record(String name, Double avgload, String os, Long timestamp, Integer cpunum) {
-            this.name = name;
+        public Record(String ip, Double avgload, Long timestamp, Integer cpunum) {
+            this.ip = ip;
             this.avgLoad = avgload;
-            this.os = os;
             this.timeStamp = timestamp;
             this.cpuNum = cpunum;
         }
@@ -39,12 +31,12 @@ public class Record extends Data {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getIp() {
+        return ip;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
     public Double getAvgLoad() {
@@ -55,13 +47,7 @@ public class Record extends Data {
         this.avgLoad = avgLoad;
     }
 
-    public String getOs() {
-        return os;
-    }
 
-    public void setOs(String os) {
-        this.os = os;
-    }
 
     public Long getTimeStamp() {
         return timeStamp;
