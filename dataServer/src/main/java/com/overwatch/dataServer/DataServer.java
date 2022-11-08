@@ -10,7 +10,6 @@ import ustc.mike.overwatch.common.data.Record;
 
 @SpringBootApplication
 @Component
-@EnableAutoConfiguration
 public class DataServer {
 
 

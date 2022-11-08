@@ -71,24 +71,26 @@ public class SelectHandler extends SimpleChannelHandler {
                     Long now=System.currentTimeMillis();
                     for(Result result:list)
                     {
-                        if(now>=result.getTimeStamp()+5000)
-                        {
-                            result.setStatus(true);
-                        }
+                        System.out.println(result);
+//                        if(now>=result.getTimeStamp()+5000)
+//                        {
+//                            result.setStatus(true);
+//                        }
                     }
                 }
                 channel.write(JSON.toJSONString(list)+'\n');
                 break;
             }
-            case CommandType.SELECT_ONEUPTODATE:{
-                Result result = resultMapper.selectOneUpToDate(command.getContents().get("name"));
-                Long now=System.currentTimeMillis();
-                if(now>=result.getTimeStamp()+5000)
-                        result.setStatus(true);
-                channel.write(JSON.toJSONString(result.toString()));
-                break;
-            }
+//            case CommandType.SELECT_ONEUPTODATE:{
+//                Result result = resultMapper.selectOneUpToDate(command.getContents().get("name"));
+//                Long now=System.currentTimeMillis();
+//                if(now>=result.getTimeStamp()+5000)
+//                        result.setStatus(true);
+//                channel.write(JSON.toJSONString(result.toString()));
+//                break;
+//            }
             case CommandType.INSERT:{
+                System.out.println("inset receieve");
                 Report report = JSON.parseObject(command.getContents().get("report"), Report.class);
                 Record record = new Record();
                 record.setAvgLoad(report.getLoad());

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.overwatch.dataServer.dao.ResultMapper">
+
+    <sql id="selectFields">
+        c.ip,c.name,avg_load,time_stamp,cpu_num
+    </sql>
+<!--    <select id="selectAllUpToDate" resultType="Result">-->
+<!--        select <include refid="selectFields"></include>-->
+<!--        from record as r,client as c-->
+<!--        where c.ip=r.ip and (r.ip,time_stamp) in (select ip,max(time_stamp) from record group by ip)-->
+<!--    </select>-->
+
+    <select id="selectAll" resultType="Result">
+        select <include refid="selectFields"></include>
+        from record as r,client as c
+        where c.ip=r.ip
+    </select>
+
+    <select id="selectOneUpToDate" resultType="Result">
+        select <include refid="selectFields"></include>
+        from record as r,client as c
+        where  c.ip=r.ip and time_stamp = select time_stamp from record order by time_stamp desc limit 0,1
+    </select>
+
+</mapper>

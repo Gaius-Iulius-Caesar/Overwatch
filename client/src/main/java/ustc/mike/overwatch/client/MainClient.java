@@ -54,9 +54,9 @@ import java.util.TimerTask;
 @Component
 @EnableAutoConfiguration
 public class MainClient implements CommandLineRunner {
-    @Value("${overwatchServer.port}")
+    @Value("${overwatchserver_receive_port}")
     int    overwatchServerPort;
-    @Value("${overwatchServer.ip}")
+    @Value("${overwatchserver}")
     String overwatchServerIp;
 
     

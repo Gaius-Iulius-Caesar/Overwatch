@@ -40,18 +40,10 @@ public class RegisterAndReportHandler extends SimpleChannelHandler {
     
     private Logger logger = LoggerFactory.getLogger(RegisterAndReportHandler.class.getName());
 
-    @Value("${dataServerPort}")
-    private int   dataServerPort;
+    @Value("${dataserver_receive_port}")
+    private int   dataserver_receive_port;
     @Value("${dataServerIp}")
     private String dataServerIp;
-    @Value("${overwatchServerPort}")
-    private int   overwatchServerPort;
-    @Value("${overwatchServerIp}")
-    private String overwatchServerIp;
-    @Value("${webServerPort}")
-    private int   webServerPort;
-    @Value("${overwatchServerIp}")
-    private String webServerIp;
     private Socket socket;
     private BufferedReader reader;
     private BufferedWriter writer;
@@ -62,20 +54,15 @@ public class RegisterAndReportHandler extends SimpleChannelHandler {
         System.out.println(command);
         switch (command.getType()) {
             case CommandType.CLIENT_REPORT: {//相当于转发Report
-                Client client = (Client) ctx.getAttachment();
-                if (client == null) {
-                    e.getChannel().close();
-                }
-
+                System.out.println(command);
                 command.setType(CommandType.INSERT);
 
-                socket= new Socket(dataServerIp, dataServerPort);
-                reader= new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+                Socket socket = new Socket("dataserver_receive_port", dataserver_receive_port);
                 writer= new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 writer.write(command.toString());
                 writer.flush();
                 socket.close();
-                reader.close();
                 writer.close();
                 break;
             }

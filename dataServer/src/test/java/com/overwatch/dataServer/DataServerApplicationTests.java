@@ -31,10 +31,13 @@ public  class DataServerApplicationTests implements ApplicationContextAware {
 	}
 	@Autowired
 	private ResultMapper resultMapper;
+	@Autowired
+	private RecordMapper recordMapper;
 	@Test
 	public void contextLoads() {
 		System.out.println(applicationContext);
 		resultMapper=applicationContext.getBean(ResultMapper.class);
+		recordMapper=applicationContext.getBean(RecordMapper.class);
 //		recordService.insertRecord(new Record("123",12.0,"windows",(long)13,8));
 		List<Result> results = resultMapper.selectAllUpToDate();
 		for(Result result: results)
@@ -42,7 +45,11 @@ public  class DataServerApplicationTests implements ApplicationContextAware {
 			System.out.println(result);
 
 		}
-
+//		List<Record> records=recordMapper.selectAll();
+//		for(Record record:records)
+//		{
+//			System.out.println(records);
+//		}
 	}
 
 }
