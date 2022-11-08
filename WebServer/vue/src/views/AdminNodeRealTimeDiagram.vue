@@ -38,6 +38,12 @@ export default {
 
     // console.log(this.list)
     option = {
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow'
+        }
+      },
       title: {
         text: '实时状态图'
       },
