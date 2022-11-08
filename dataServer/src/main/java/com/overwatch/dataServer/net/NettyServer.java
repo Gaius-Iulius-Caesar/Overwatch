@@ -26,7 +26,7 @@ public class NettyServer implements ApplicationContextAware {
     
 
     
-    @Value("${send_receive_port}")
+    @Value("${dataserver_receive_port}")
     int port;
     private ChannelFactory factory;
 

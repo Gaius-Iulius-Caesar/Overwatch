@@ -9,9 +9,11 @@ import java.util.List;
 public interface RecordMapper {
 
     @Insert({
-            "insert into record(ip,avg_load,time_stamp,cpu_num,status) ",
-            "values(#{ip},#{avgLoad},#{timeStamp},#{cpuNum},#{status})"
+            "insert into record(ip,avg_load,time_stamp,cpu_num) ",
+            "values(#{ip},#{avgLoad},#{timeStamp},#{cpuNum})"
     })
     @Options(useGeneratedKeys = true,keyProperty = "id")
     int insertRecord(Record record);
+
+    List<Record> selectAll();
 }
