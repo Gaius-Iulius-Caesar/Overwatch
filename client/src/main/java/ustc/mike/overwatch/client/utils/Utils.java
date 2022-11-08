@@ -66,10 +66,12 @@ public class Utils {
                 .getOperatingSystemMXBean();
         return osmxb.getArch() + osmxb.getName() + osmxb.getVersion();
     }
-    
-    public static double getAvgLoad() {
-        OperatingSystemMXBean osmxb = (OperatingSystemMXBean) ManagementFactory
-                .getOperatingSystemMXBean();
-        return osmxb.getSystemLoadAverage();
-    }
+//
+//    public static double getAvgLoad() {
+//        OperatingSystemMXBean osmxb = (OperatingSystemMXBean) ManagementFactory
+//                .getOperatingSystemMXBean();
+//        return osmxb.getSystemCpuLoad();
+//    }
+
+
 }
