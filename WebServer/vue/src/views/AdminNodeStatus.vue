@@ -18,9 +18,9 @@
       <tbody id="tb">
       <tr v-for="item in list" :key="item.id">
         <th><input type="checkbox" @click="ReverseSelectAll"></input></th>
-        <th>{{ item.id }}</th>
+        <th>{{ item.ip }}</th>
         <th>{{ item.name }}</th>
-        <th>{{ item. os}}</th>
+        <th>{{ item.status}}</th>
         <th>
 <!--          用了iconmoon字体图标-->
           <a href='javascript:'></a>
