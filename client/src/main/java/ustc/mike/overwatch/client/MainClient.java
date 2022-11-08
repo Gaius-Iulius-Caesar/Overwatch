@@ -55,16 +55,12 @@ import static ustc.mike.overwatch.client.utils.WindowsCpuInternal.getCpuRatioFor
 @SpringBootApplication
 @Component
 public class MainClient implements CommandLineRunner {
-<<<<<<< HEAD
-//    @Value("${overwatchServer.port}")
-//    int    overwatchServerPort;
+
+
+    @Value("${overwatchServer_receive_port=9091}")
+    private int overwatchServerPort;
     @Value("${overwatchServer.ip}")
-=======
-    @Value("${overwatchserver_receive_port}")
-    int    overwatchServerPort;
-    @Value("${overwatchserver}")
->>>>>>> cad064d72a0ea0544aefce52b358d76b57ed16c3
-    String overwatchServerIp;
+    private String overwatchServerIp;
 
 
     private Client client = new Client();
@@ -73,15 +69,11 @@ public class MainClient implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Logger logger = LoggerFactory.getLogger(MainClient.class.getName());
 
-<<<<<<< HEAD
 
-        logger.info("Register to :" + overwatchServerIp + ":" + 9091);
-        Socket socket = new Socket(overwatchServerIp, 9091);
-=======
-    
         logger.info("Register to :" + overwatchServerIp + ":" + overwatchServerPort);
+
         Socket socket = new Socket(overwatchServerIp, overwatchServerPort);
->>>>>>> cad064d72a0ea0544aefce52b358d76b57ed16c3
+
         BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 
@@ -96,13 +88,9 @@ public class MainClient implements CommandLineRunner {
                     throw new RuntimeException(e);
                 }
                 report.setCpus(Utils.getCpuNum());
-<<<<<<< HEAD
+
                 report.setLoad(getCpuRatioForWindows());
 
-=======
-                report.setLoad(Utils.getAvgLoad());
-    
->>>>>>> cad064d72a0ea0544aefce52b358d76b57ed16c3
                 Command reportCmd = new Command();
                 reportCmd.setType(CommandType.CLIENT_REPORT);
                 HashMap<String, String> reportCmdContents = new HashMap<String, String>();
@@ -111,7 +99,7 @@ public class MainClient implements CommandLineRunner {
 
                 try {
                     writer.write(reportCmd.toString());
-                  System.out.println(111111);
+                    System.out.println(111111);
                     writer.flush();
                 } catch (IOException e) {
                     e.printStackTrace();
