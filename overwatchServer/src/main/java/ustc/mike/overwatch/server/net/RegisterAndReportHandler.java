@@ -41,8 +41,8 @@ public class RegisterAndReportHandler extends SimpleChannelHandler {
     private Logger logger = LoggerFactory.getLogger(RegisterAndReportHandler.class.getName());
 
     @Value("${dataserver_receive_port}")
-    private int   dataserver_receive_port;
-    @Value("${dataServerIp}")
+    private int dataserver_receive_port;
+    @Value("${dataServer.ip}")
     private String dataServerIp;
     private Socket socket;
     private BufferedReader reader;
@@ -57,8 +57,11 @@ public class RegisterAndReportHandler extends SimpleChannelHandler {
                 System.out.println(command);
                 command.setType(CommandType.INSERT);
 
-
-                Socket socket = new Socket("dataserver_receive_port", dataserver_receive_port);
+                System.out.println(dataServerIp);
+                System.out.println(dataserver_receive_port);
+//                未能正确注入dataServerIp和dataserver_receive_port变量，暂时写死
+//                Socket socket = new Socket(dataServerIp, dataserver_receive_port);
+                Socket socket = new Socket("192.168.159.178", 9090);
                 writer= new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 writer.write(command.toString());
                 writer.flush();

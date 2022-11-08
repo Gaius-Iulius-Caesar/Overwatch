@@ -19,9 +19,9 @@ import java.util.concurrent.Executors;
 
 @Component
 public class NettyServer implements ApplicationContextAware {
-    
 
-    
+
+
     @Value("${overwatchserver_receive_port}")
     int port;
     private ChannelFactory factory;
@@ -39,13 +39,13 @@ public class NettyServer implements ApplicationContextAware {
         bootstrap.bind(new InetSocketAddress(port));
 
     }
-    
+
     @PreDestroy
     public void stop() {
         if (factory != null)
             factory.shutdown();
     }
-    
+
 
     public void setApplicationContext(ApplicationContext ctx) throws BeansException { }
 }
