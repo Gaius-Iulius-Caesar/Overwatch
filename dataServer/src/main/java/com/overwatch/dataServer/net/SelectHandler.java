@@ -2,6 +2,7 @@
 package com.overwatch.dataServer.net;
 
 import com.alibaba.fastjson.JSON;
+import com.overwatch.dataServer.dao.ClientMapper;
 import com.overwatch.dataServer.dao.RecordMapper;
 import com.overwatch.dataServer.dao.ResultMapper;
 import com.overwatch.dataServer.utils.SpringContextUtil;
@@ -31,6 +32,8 @@ public class SelectHandler extends SimpleChannelHandler {
     @Autowired
     private ResultMapper resultMapper;
 
+    @Autowired
+    private ClientMapper clientMapper;
     public SelectHandler() throws IOException {
     }
 
@@ -42,7 +45,7 @@ public class SelectHandler extends SimpleChannelHandler {
         ApplicationContext CTX= SpringContextUtil.getApplicationContext();
         recordMapper=CTX.getBean(RecordMapper.class);
         resultMapper=CTX.getBean(ResultMapper.class);
-
+        clientMapper=CTX.getBean(ClientMapper.class);
         Command command = JSON.parseObject(e.getMessage().toString(), Command.class);
         System.out.print(command);
 
@@ -72,25 +75,17 @@ public class SelectHandler extends SimpleChannelHandler {
                     for(Result result:list)
                     {
                         System.out.println(result);
-//                        if(now>=result.getTimeStamp()+5000)
-//                        {
-//                            result.setStatus(true);
-//                        }
+                        if(now>=result.getTimeStamp()+5000)
+                        {
+                            result.setStatus(true);
+                        }
                     }
                 }
                 channel.write(JSON.toJSONString(list)+'\n');
                 break;
             }
-//            case CommandType.SELECT_ONEUPTODATE:{
-//                Result result = resultMapper.selectOneUpToDate(command.getContents().get("name"));
-//                Long now=System.currentTimeMillis();
-//                if(now>=result.getTimeStamp()+5000)
-//                        result.setStatus(true);
-//                channel.write(JSON.toJSONString(result.toString()));
-//                break;
-//            }
             case CommandType.INSERT:{
-                System.out.println("inset receieve");
+                System.out.println("inset receive");
                 Report report = JSON.parseObject(command.getContents().get("report"), Report.class);
                 Record record = new Record();
                 record.setAvgLoad(report.getLoad());
@@ -100,10 +95,18 @@ public class SelectHandler extends SimpleChannelHandler {
                 recordMapper.insertRecord(record);
                 break;
             }
+            case CommandType.INSERT_CLIENT:{
+                System.out.println("inset client receive");
+                Client client=JSON.parseObject(command.getContents().get("client"), Client.class);
+                clientMapper.insertClient(client);
+                break;
+            }
             case CommandType.TEST:{
                 String response="dataServer responser"+"\n";
                 channel.write(response);
+                break;
             }
+
         }
     }
     
