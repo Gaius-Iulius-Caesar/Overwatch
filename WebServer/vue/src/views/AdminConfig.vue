@@ -4,34 +4,14 @@
       <ul>
         <li>
           <label for="ip">IP Address</label>
-          <input type="text" id="ip" name = "ip">
+          <input type="text" id="ip" name = "ip" v-model="client.ip">
         </li>
         <li>
           <label for="name">Client Name</label>
-          <input type="text" id="name" name = "client">
+          <input type="text" id="name" name = "client" v-model="client.name">
         </li>
-<!--        <li>-->
-<!--          <label for="Cpu-number">CPU Number</label>-->
-<!--          <select class="form-control" id="Cpu-number">-->
-<!--            <option value="1">1</option>-->
-<!--            <option value="2">2</option>-->
-<!--            <option value="4">4</option>-->
-<!--            <option value="8">8</option>-->
-<!--          </select>-->
-<!--        </li>-->
-<!--        <li>-->
-<!--          <label for="OS-select">OS Select</label>-->
-<!--          <select class="form-group" id="OS-select" multiple="multiple">-->
-<!--            <option value="Windows">Windows XP</option>-->
-<!--            <option value="Windows">Windows 10</option>-->
-<!--            <option value="Linux">CentOS 6.5</option>-->
-<!--            <option value="Ubuntu">Ubuntu 16.04</option>-->
-<!--            <option value="MAC">x86_64Mac OS X9.2.1</option>-->
-<!--            <option value="MAC">x86_64Mac OS X10.12.6</option>-->
-<!--          </select>-->
-<!--        </li>-->
         <li class="last">
-          <input type="submit"  class = "submit">
+          <input type="submit"  class = "submit" @click="submit">
           <input type="reset" class="reset">
         </li>
       </ul>
@@ -41,7 +21,24 @@
 
 <script>
 export default {
-  name: "AdminConfig"
+  name: "AdminConfig",
+  data(){
+    return{
+      client:{}
+    }
+  },
+  methods:{
+    submit(){
+      this.request.post("http://localhost:8081/machine/addOneClient", this.user).then(res => {
+            if (res.code === '200') {
+              this.$message.success("ok")
+            } else {
+              this.$message.error(res.msg)
+            }
+          }
+      )
+    }
+  }
 }
 </script>
 
