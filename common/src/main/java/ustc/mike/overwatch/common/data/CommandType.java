@@ -13,6 +13,7 @@ public class CommandType {
     public static final int SELECT_ALL=6;
     public static final int INSERT=7;
     public static final int TEST=8;
+    public static final int INSERT_CLIENT=9;
 
 
 
