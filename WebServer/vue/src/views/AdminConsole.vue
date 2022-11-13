@@ -6,19 +6,17 @@
       <h3>前端</h3>
       <h4>组件说明</h4>
       <ul>
-        <li>Spring boot 实现路由控制</li>
-        <li>Thymeleaf 模板引擎作为视图</li>
-        <li>Bootsrtap 后台管理UI模板</li>
+        <li>Vue Router实现路由控制</li>
         <li>Echarts 实现图表展示</li>
-        <li>Ajax 实现数据心跳以及实时更新数据</li>
+        <li>Axios实现数据心跳以及实时更新数据</li>
       </ul>
       <hr>
       <h3>后端</h3>
       <h4>组件依赖</h4>
       <ul>
-        <li>使用 springboot 实现 restful 接口开发</li>
-        <li>使用 netty 实现连接的良好扩展性</li>
-        <li>使用 hibernate 实现数据库快速开发</li>
+        <li>使用 Springboot 框架</li>
+        <li>使用 Netty 实现连接的良好扩展性</li>
+        <li>使用 Mybatis 实现数据库快速开发</li>
       </ul>
     </div>
 
