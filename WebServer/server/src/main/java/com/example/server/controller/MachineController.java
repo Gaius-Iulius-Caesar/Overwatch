@@ -5,6 +5,7 @@ import com.example.server.common.Command;
 import com.example.server.common.CommandType;
 import com.example.server.common.Constants;
 import com.example.server.common.Result;
+import com.example.server.controller.DTO.ClientDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
@@ -79,5 +80,25 @@ public class MachineController {
         reader.close();
         writer.close();
         return Result.success(response);
+    }
+
+    @PostMapping("/addOneClient")
+    public Result addOneClient(@RequestBody ClientDTO client) throws IOException {
+
+        Socket socket = new Socket(dataServer_ip, dataServer_port);
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+
+        Command command = new Command();
+        command.setType(CommandType.INSERT_CLIENT);
+        HashMap<String, String> reportCmdContents = new HashMap<String, String>();
+        reportCmdContents.put("client", client.toString());
+        command.setContents(reportCmdContents);
+        writer.write(command.toString());
+        writer.flush();
+        socket.close();
+//        reader.close();
+        writer.close();
+        return Result.success();
     }
 }
