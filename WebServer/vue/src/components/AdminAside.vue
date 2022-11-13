@@ -14,7 +14,7 @@
     <el-menu-item index="/admin/adminconsole">
       <i class="el-icon-house"></i>
       <template slot="title">
-        <span slot="title">控制台</span>
+        <span slot="title">系统说明</span>
       </template>
     </el-menu-item>
 
