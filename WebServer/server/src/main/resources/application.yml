@@ -2,7 +2,7 @@ server:
   port: 8081
 
 dataServer:
-  ip: 192.168.159.178
+  ip: 192.168.112.178
   port: 9090
 
 #spring:
