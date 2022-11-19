@@ -26,17 +26,22 @@ export default {
       if (res.code === '200') {
         this.list=$.parseJSON(res.msg)
         console.log(this.list)
+
         for(let i =0;i<this.list.length;i++){
-          this.x_data.push(this.list[i].name)
+          if(this.list[i].status === true){
+            this.x_data.push(this.list[i].name)
+          }
         }
         for(let i =0;i<this.list.length;i++){
-          this.y_data.push(this.list[i].avgLoad)
+          if(this.list[i].status === true){
+            this.y_data.push(this.list[i].avgLoad)
+          }
+
         }
         option && myChart.setOption(option)
       }
     })
 
-    // console.log(this.list)
     option = {
       tooltip: {
         trigger: 'axis',

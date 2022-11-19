@@ -15,7 +15,10 @@ export default {
       client:[],
       ip:[],
       legend_data:[],
-      timeStamp: [],
+      timeStamp: {
+        stamp:[],
+        date:[]
+      },
 
     }
   },
@@ -31,25 +34,29 @@ export default {
         for(let i = 0;i<this.list.length;i++){
           let Name = this.list[i].name
           let avgload = this.list[i].avgLoad
-          let timeStamp = this.list[i].timeStamp
+          let timeStamp = new Date(this.list[i].timeStamp)
           let ip = this.list[i].ip
-
+          let time = timeStamp.getFullYear() + "-" +(parseInt(timeStamp.getMonth())+1) + "-" +timeStamp.getDate() +" "+timeStamp.getHours() +':'+ timeStamp.getMinutes() +':'+ timeStamp.getSeconds()
           if(!this.legend_data.includes(Name)){//插入不重复的图例
             this.legend_data.push(Name)
           }
 
-          if(!this.timeStamp.includes(timeStamp)){//插入不重复的时间戳
-            this.timeStamp.push(timeStamp)
+          if(!this.timeStamp.stamp.includes(timeStamp)){//插入不重复的时间戳
+            this.timeStamp.stamp.push(timeStamp)
+            this.timeStamp.date.push(time)
           }
-
           if(!this.ip.includes(ip)){//插入不重复的ip
             this.ip.push(ip)
             let client = {
               name : Name,
               type: 'line',
-              stack: 'Total',
-              data : [avgload]
+              // stack: 'Total',
+              data : []
             }
+            for(let j = 1;j<this.timeStamp.date.length;j++){
+              client.data.push(0)
+            }
+            client.data.push(avgload)
             this.client.push(client)
           }
           else{//遇到相同ip的
@@ -63,6 +70,7 @@ export default {
           }
 
         }
+        console.log(this.timeStamp.date)
         option && myChart.setOption(option);
       }
     })
@@ -92,11 +100,11 @@ export default {
         name: 'timeStamp',
         type: 'category',
         boundaryGap: false,
-        data: this.timeStamp
+        data: this.timeStamp.date
       },
       yAxis: {
         name: 'avgLoad',
-        type: 'value'
+        type: 'value',
       },
       series: this.client
     };
