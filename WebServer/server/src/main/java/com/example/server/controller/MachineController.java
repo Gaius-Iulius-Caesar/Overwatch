@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.HashMap;
 
@@ -29,11 +30,11 @@ public class MachineController {
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         Command command=new Command();
         command.setType(CommandType.SELECT_ALLUPTODATE);
-//        command.getContents().put("ip",dataServer_ip);
-//        command.getContents().put("port",String.valueOf(dataServer_port));
         writer.write(command.toString());
         writer.flush();
         String response = reader.readLine();
+
+
         socket.close();
         reader.close();
         writer.close();
@@ -76,6 +77,8 @@ public class MachineController {
         writer.write(command.toString());
         writer.flush();
         String response = reader.readLine();
+
+
         socket.close();
         reader.close();
         writer.close();

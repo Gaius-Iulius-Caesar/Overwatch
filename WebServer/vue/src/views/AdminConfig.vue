@@ -1,6 +1,6 @@
 <template>
   <div class='box'>
-    <form action="" method="post">
+    <form action="" method="post" onsubmit="false">
       <ul>
         <li>
           <label for="ip">IP Address</label>
@@ -11,7 +11,7 @@
           <input type="text" id="name" name = "client" v-model="client.name">
         </li>
         <li class="last">
-          <input type="submit"  class = "submit" @click="submit">
+          <input type="button"  class = "submit" @click="submitClient" value="提交">
           <input type="reset" class="reset">
         </li>
       </ul>
@@ -28,8 +28,8 @@ export default {
     }
   },
   methods:{
-    submit(){
-      this.request.post("http://localhost:8081/machine/addOneClient", this.user).then(res => {
+    submitClient(){
+      this.request.post("http://localhost:8081/machine/addOneClient", this.client).then(res => {
             if (res.code === '200') {
               this.$message.success("ok")
             } else {
