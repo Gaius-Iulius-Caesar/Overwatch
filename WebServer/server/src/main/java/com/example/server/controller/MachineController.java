@@ -14,6 +14,13 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.HashMap;
 
+/**
+ * 前端机器信息增删改查的控制类
+ *
+ * @author Wu Sai
+ * @version 1.00
+ * @Date 2022.10.30
+ */
 @RequestMapping("/machine")
 @RestController
 public class MachineController {
@@ -28,7 +35,7 @@ public class MachineController {
         Socket socket = new Socket(dataServer_ip, dataServer_port);
         BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-        Command command=new Command();
+        Command command = new Command();
         command.setType(CommandType.SELECT_ALLUPTODATE);
         writer.write(command.toString());
         writer.flush();
@@ -43,17 +50,17 @@ public class MachineController {
 
     @GetMapping("/getOneUpToDate")
     public Result getOneUpToDate(@RequestParam(defaultValue = "") String name) throws IOException {
-        if(name.equals(""))
-            return Result.error(Constants.CODE_400,"参数错误");
+        if (name.equals(""))
+            return Result.error(Constants.CODE_400, "参数错误");
         Socket socket = new Socket(dataServer_ip, dataServer_port);
         BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-        Command command=new Command();
+        Command command = new Command();
         command.setType(CommandType.SELECT_ONEUPTODATE);
         HashMap<String, String> contents = new HashMap<>();
 //        contents.put("ip",webServer_ip);
 //        contents.put("port",String.valueOf(webSever_port));
-        contents.put("name",name);
+        contents.put("name", name);
         command.setContents(contents);
         writer.write(command.toString());
         writer.flush();
@@ -63,12 +70,13 @@ public class MachineController {
         writer.close();
         return Result.success(response);
     }
+
     @GetMapping("/getAll")
     public Result getAll() throws IOException {
         Socket socket = new Socket(dataServer_ip, dataServer_port);
         BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-        Command command=new Command();
+        Command command = new Command();
         command.setType(CommandType.SELECT_ALL);
         HashMap<String, String> contents = new HashMap<>();
 //        contents.put("ip",webServer_ip);

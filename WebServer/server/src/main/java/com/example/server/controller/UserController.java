@@ -12,7 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
-
+/**
+ * 前端用户信息增删改查的控制类
+ *
+ * @author Wu Sai
+ * @version 1.00
+ * @Date 2022.10.30
+ */
 @RestController
 @RequestMapping("/user")
 public class UserController {

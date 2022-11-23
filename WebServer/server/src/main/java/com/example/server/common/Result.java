@@ -6,6 +6,10 @@ import lombok.NoArgsConstructor;
 
 /**
  * 接口统一返回包装类
+ *
+ * @author Wu Sai
+ * @version 1.01
+ * @Date 2022.10.01
  */
 @Data
 @NoArgsConstructor

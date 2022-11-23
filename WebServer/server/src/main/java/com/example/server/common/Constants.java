@@ -3,7 +3,13 @@ package com.example.server.common;
 import java.util.Arrays;
 import java.util.List;
 
-// 定义状态码常量
+/**
+ * 定义前后端交互的状态码常量
+ *
+ * @author Wu Sai
+ * @version 1.00
+ * @Date 2022.10.01
+ */
 public interface Constants {
     String CODE_200 = "200"; // 成功
     String CODE_401 = "401"; // 权限不足

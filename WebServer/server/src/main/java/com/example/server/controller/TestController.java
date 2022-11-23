@@ -11,6 +11,13 @@ import java.io.*;
 import java.net.Socket;
 import java.util.HashMap;
 
+/**
+ * 前端机器信息增删改查的控制类（测试用）
+ *
+ * @author Wu Sai
+ * @version 1.00
+ * @Date 2022.10.30
+ */
 @RestController
 public class TestController {
     @Value("${dataServer.ip}")
