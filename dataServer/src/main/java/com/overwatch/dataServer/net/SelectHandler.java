@@ -18,6 +18,8 @@ import ustc.mike.overwatch.common.data.*;
 
 
 import java.io.*;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Date;
 import java.util.List;
@@ -34,6 +36,9 @@ public class SelectHandler extends SimpleChannelHandler {
 
     @Autowired
     private ClientMapper clientMapper;
+
+    @Value("dataServer.ip")
+    private String localHostIp;
     public SelectHandler() throws IOException {
     }
 
@@ -47,9 +52,11 @@ public class SelectHandler extends SimpleChannelHandler {
         resultMapper=CTX.getBean(ResultMapper.class);
         clientMapper=CTX.getBean(ClientMapper.class);
         Command command = JSON.parseObject(e.getMessage().toString(), Command.class);
-        System.out.print(command);
-
         Channel channel = ctx.getChannel();
+        InetSocketAddress ipSocket = (InetSocketAddress)channel.getRemoteAddress();
+        String clientIp = ipSocket.getAddress().getHostAddress();
+        System.out.print("LocalHostIp: " +CTX.getEnvironment().getProperty("dataServer.ip")+" 收到了来自"+clientIp+"的信息："+command);
+
         switch (command.getType()) {
             case CommandType.SELECT_ALL: {
                 List<Result> list=resultMapper.selectAll();
@@ -58,7 +65,7 @@ public class SelectHandler extends SimpleChannelHandler {
                     Long now=System.currentTimeMillis();
                     for(Result result:list)
                     {
-                        if(now>=result.getTimeStamp()+5000)
+                        if(now<=result.getTimeStamp()+50000)
                         {
                             result.setStatus(true);
                         }
@@ -74,8 +81,7 @@ public class SelectHandler extends SimpleChannelHandler {
                     Long now=System.currentTimeMillis();
                     for(Result result:list)
                     {
-                        System.out.println(result);
-                        if(now>=result.getTimeStamp()+5000)
+                        if(now<=result.getTimeStamp()+50000)
                         {
                             result.setStatus(true);
                         }
@@ -85,7 +91,6 @@ public class SelectHandler extends SimpleChannelHandler {
                 break;
             }
             case CommandType.INSERT:{
-                System.out.println("inset receive");
                 Report report = JSON.parseObject(command.getContents().get("report"), Report.class);
                 Record record = new Record();
                 record.setAvgLoad(report.getLoad());
@@ -96,7 +101,6 @@ public class SelectHandler extends SimpleChannelHandler {
                 break;
             }
             case CommandType.INSERT_CLIENT:{
-                System.out.println("inset client receive");
                 Client client=JSON.parseObject(command.getContents().get("client"), Client.class);
                 clientMapper.insertClient(client);
                 break;

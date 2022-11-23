@@ -68,16 +68,10 @@ public class MainClient implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         Logger logger = LoggerFactory.getLogger(MainClient.class.getName());
-
-
         logger.info("Register to :" + overwatchServerIp + ":" + overwatchServerPort);
-
         Socket socket = new Socket(overwatchServerIp, overwatchServerPort);
-
         BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-
-
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {//心跳协议
@@ -88,15 +82,12 @@ public class MainClient implements CommandLineRunner {
                     throw new RuntimeException(e);
                 }
                 report.setCpus(Utils.getCpuNum());
-
                 report.setLoad(getCpuRatioForWindows());
-
                 Command reportCmd = new Command();
                 reportCmd.setType(CommandType.CLIENT_REPORT);
                 HashMap<String, String> reportCmdContents = new HashMap<String, String>();
                 reportCmdContents.put("report", report.toString());
                 reportCmd.setContents(reportCmdContents);
-
                 try {
                     writer.write(reportCmd.toString());
                     System.out.println(111111);
